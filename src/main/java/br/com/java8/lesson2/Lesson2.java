@@ -92,9 +92,10 @@ public class Lesson2 {
                 "The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog");
 
         /* YOUR CODE HERE */
-        StringBuilder sb = new StringBuilder();
-        list.stream().skip(1).limit(3).forEach(s -> sb.append(s).append("-"));
-        String result = sb.toString();
+        String result = list.stream()
+                .skip(1)
+                .limit(3)
+                .collect(Collectors.joining("-"));
         System.out.println(result);
     }
 
@@ -120,10 +121,11 @@ public class Lesson2 {
         try (BufferedReader reader = Files.newBufferedReader(
                 Paths.get("src/main/resources/SonnetI.txt"), StandardCharsets.UTF_8)) {
             /* YOUR CODE HERE */
-            reader.lines()
+            List<String> words = reader.lines()
                     .flatMap(line -> Stream.of(line.split(WORD_REGEXP)))
                     .distinct()
-                    .forEach(System.out::println);
+                    .collect(Collectors.toList());
+            words.forEach(System.out::println);
         }
     }
 
@@ -159,7 +161,7 @@ public class Lesson2 {
                     .distinct()
                     .sorted((s, o) -> s.length() - o.length())
                     .collect(Collectors.toList());
-            
+
             list.forEach(System.out::println);
         }
     }
